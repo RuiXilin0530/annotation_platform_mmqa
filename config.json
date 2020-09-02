@@ -1,0 +1,9 @@
+{
+    "data_fn": "voa_title_text_best_bert_html.json",
+    "finish_fn": ["./anno_data/labeled_data.txt"],
+    "pw_fn": "pw.json",
+    "num_worker": 3,
+    "timeout":  null,
+    "id_key": "id",
+    "port": 8000
+}

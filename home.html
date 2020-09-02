@@ -1,0 +1,143 @@
+<!DOCTYPE>
+<html>
+<head>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+    <script language="javascript" type="text/javascript">
+        String.prototype.replaceAll = function (FindText, RepText) {
+            regExp = new RegExp(FindText, "g");
+            return this.replace(regExp, RepText);
+        }
+        </script>
+    <script src="web/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="web/style.css">
+</head>
+
+<body>
+    <div class="user-status">
+        <div id="user_name_display">not sign in</div>
+        <div id="login_button">
+            <button class="login">sign in</button>
+        </div>
+    </div>
+    
+    <div class="pop-window login">
+        <div class="theme-poptit">
+            <a title="close" class="close">×</a>
+            <h3>please sign in</h3>
+        </div>
+        <div class="theme-popbod dform">
+            <form class="theme-signin" name="loginform">
+                <ul>
+                    <li><strong>username：</strong><input class="ipt" type="text" name="user" value="" size="20" /></li>
+                    <li><strong>password：</strong><input class="ipt" type="password" name="pwd" value="" size="20" /></li>
+                </ul>
+                <div class="status login">wrong</div>
+                <div class="login-submit"><input class="btn btn-login-submit" type="submit" name="submit" value=" sign in " /></div>
+            </form>
+        </div>
+    </div>
+    <div class="login-window-shadow"></div>
+
+    <div >
+        <br><b>Introduction</b>
+        <br>1. Everyone has his own user id and password, please take care of it.
+        <br>2. Every task will include at least one question-and-answer pair(<b>QA pair</b>). You need to read the <b>whole context</b> on the left and then answer the question on the right.
+        <br>3. You need to judge the <b>reasonableness</b> of this QA pair. 
+        <br>  3.1 If you think the QA pair is <b>absolutely correct</b>, please select "correct", and then fill <b>"None"</b> in the blank.
+        <br>  3.2 if you think the <b>question</b> is wrong, please select "Need to modify the question", and then fill the correct question in the blank. The question needs to be the <b>question of "arguement role"</b> if "arguement role" is correct.
+        <br>  3.3 if you think the <b>answer</b> is wrong, please select "Need to modify the answer", and then fill the correct answer in the blank. The answer needs to be a detailed <b>object of "arguement role"</b> if "arguement role" is correct.
+        <br>  3.4 if you think the question and answer are <b>both wrong</b>, please considers <b>which is more helpful</b> to modify the question or the answer, and implement it in accordance with 3.2 or 3.3.
+        <br>  3.5 if you think the QA pair is <b>hopeless</b>, please select "Absolutely wrong", then fill the reason in the blank. It is recommended not to choose this because the system needs you to <b>write at least 50 words</b>.
+        <br>4. You also need to judge whether or not the QA pair is <b>related to the pictures</b>. 
+        <br>5. You can press the <b>"refresh"</b> button to clear all your selections.
+        <br>6. If you press the "submit" button but doesn't submit it successfully, you need to <b>check your answer carefully</b>.
+    </div>
+
+    <div id="operation" class="">
+        
+        <div class="opt-btn"><button id="btn_refresh">refresh</button></div>
+        <div class="opt-btn"><button id="btn_submit">submit</button></div>
+        
+    </div>
+
+    <div class="status data-req">ddddddddddddddd</div>
+
+    <div id="head_information">
+        <div>
+        <div id="pid" class="head-line">ID： </div>
+        <!-- <div id="page_name" class="head-line"></div>
+        <div id="page_section" class="head-line"></div>
+        <div id="page_cat" class="head-line"></div> -->
+    </div>
+    </div>
+
+    <!-- <div class="table-btn fixed">
+        <div class="cont-btn-line"><button name="btn_select">confirm</button></div>
+        <div class="cont-btn-line"><button name="btn_back">cancel</button></div>
+        <div class="status select">Please select and fill in all</div>
+    </div>
+
+    <div class="table-btn float">
+        <div class="cont-btn-line"><button name="btn_select">confirm</button></div>
+        <div class="cont-btn-line"><button name="btn_back">cancel</button></div>
+        <div class="status select">Please select and fill in all</div>
+    </div> -->
+
+    <div id="content_table">
+        <table>
+            <tr>
+                <td valign="top">
+                    <div class="content-bilingual medical">
+                        <!-- <div id="imgs">
+                            <img src="https://gdb.voanews.com/3CE10478-B836-4463-8896-1A227417B7A8.jpg" width="300">
+                        </div> -->
+                        <!--<div class="content-sent-unlabeled" data-sentid="50112">
+                            <div class="sent-en">Hello world!!</div>
+                            <div class="sent-zh">你好世界</div>
+                        </div>-->
+                    </div>
+                </td>
+                <td valign="top">
+                    <div class="content-bilingual health">
+                        <!--<div class="content-sent-unlabeled" data-sentid="86011">
+                            <div class="sent-en">Good morning!</div>
+                            <div class="sent-zh">早上好</div>
+                        </div>-->
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="pop-window confirm">
+        <div class="theme-poptit">
+            <a title="close" class="close">×</a>
+            <h3>Please confirm</h3>
+        </div>
+        <div class="popbody">
+            <div class="b-line msg"></div>
+            <div class="b-line status">&nbsp;</div>
+            <div class="b-line"><button>confirm</button></div>
+        </div>
+    </div>
+
+    <!-- <div id="revise">
+        <table>
+            <tr>
+                <td>
+                    <div class="text-input medical">
+                        <textarea class="ipt-text" rows="10"></textarea>
+                    </div>
+                </td>
+                <td>
+                    <div class="text-input health">
+                        <textarea class="ipt-text" rows="10"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div> -->
+
+</body>
+
+</html>
