@@ -1,0 +1,1 @@
+{"id": 0, "label_results": [{"user": "user1", "start_time": "2020-09-25 12:21:04", "end_time": "2020-09-25 12:21:25", "result": {"text": ["None"], "select": [1, 2, 3]}}, {"user": "user2", "start_time": "2020-09-25 12:21:33", "end_time": "2020-09-25 12:21:40", "result": {"text": ["None"], "select": [1, 3, 4]}}]}
