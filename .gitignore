@@ -1,6 +1,9 @@
-voa_all.json
-voa_title_text_best_bert.json
-voa_title_text_best_bert_html.json
 log
-anno_data
+anno*
 pw.json
+voa*
+v2*
+count.json
+count.py
+pre.py
+analysis.py

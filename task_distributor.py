@@ -117,6 +117,7 @@ class DynamicTaskDistributor:
 
     def save_label_result(self, user, data_id, label_result):
         task_idx, task = search_list(self.working_task, lambda k: k['data'][self.id_key], data_id)
+        print(task)
         if task is None:
             print(data_id)
             print(self.working_task)

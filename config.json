@@ -1,5 +1,5 @@
 {
-    "data_fn": "voa_title_text_best_bert_html.json",
+    "data_fn": "voa_title_text_best_bert_caption.json",
     "finish_fn": ["./anno_data/labeled_data.txt"],
     "pw_fn": "pw.json",
     "num_worker": 3,

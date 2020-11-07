@@ -28,7 +28,7 @@ function build_web(){
     $("#btn_submit").click(pop_confirm_window);
     $(".pop-window.confirm .close").click(close_confirm_window);
 
-    $("*[name='btn_select']").click(func_btn_select); //属性选择器
+    $("*[name='btn_select']").click(func_btn_select);
     $("*[name='btn_back']").click(func_btn_back);
 
     // $(window).scroll(scroll_listener);
@@ -144,8 +144,10 @@ function populate_content(res_data) {
         page_data = res_data.data;
         var pid = page_data.id;
         // var title = page_data.title;
-        var pass_context = page_data.html_text;
-        var pass_start = page_data.html_start;
+        var pass_context = page_data.context.split("\n");
+        console.log(pass_context);
+        var pass_caption = page_data.caption;
+        var pass_trigger = page_data.trigger;
         var pass_qa = page_data.qas;
         var url_image = page_data.url;
         $("#pid").text("ID： " + pid)
@@ -156,23 +158,51 @@ function populate_content(res_data) {
         var medical_container = $(".content-bilingual.medical");
         var health_container = $(".content-bilingual.health");
 
-        fill_context(medical_container, pass_context, pass_start, pass_qa, url_image);
+        fill_context(medical_container, pass_context, pass_caption, pass_trigger, pass_qa, url_image);
         fill_qa(health_container, pass_qa);
     }
 }
 
-function fill_context(container, context, pass_start, pass_qa, url){
+function fill_context(container, context, pass_caption, pass_trigger, pass_qa, url){
     container.empty()
     var en_sent = $("<div></div>").attr("class", "sent-en");
+    var title_sent = $("<div></div>").attr("class", "title-en");
     // var img_box = $("<img>").attr("width", "300");
+    title_sent.html("Image:<br>")
+    container.append((title_sent.clone(true)));
     var img_box = $('<img>');
     img_box.attr("width", "300");
+    for(var i=0; i<url.length; i++){
+        img_box.attr("src", url[i]);
+        container.append(img_box.clone(true));
+        container.append('<br>');
+    }
+    console.log(pass_caption);
+    for(var k=0; k<pass_caption.length; k++){
+        a = pass_caption[k].replaceAll(pass_trigger[k], "<span style=\"color:blue\">" + pass_trigger[k] + "</span>");
+        console.log(a);
+        en_sent.html(a);
+        container.append((en_sent.clone(true)));
+        container.append('<br>');
+    }
+    
+    title_sent.html("Context:<br>")
+    container.append((title_sent.clone(true)));
+
     for(var i = 0; i< context.length; i++)
     {
         var a = context[i];
-        for(var j=0; j<pass_start.length; j++)
+        for(var j=0; j<pass_qa.length; j++)
         {
-            a = a.replaceAll(pass_qa[j].answers[0].text, "<span style=\"color:blue\">" + pass_qa[j].answers[0].text + "</span>");
+            var answer_only = new Array(0);
+
+            if(answer_only.includes(pass_qa[j].answers[0].text) == false)
+            {
+                answer_only.push(pass_qa[j].answers[0].text);
+            }
+            console.log(answer_only);
+            for(var k=0; k<answer_only.length; k++)
+                a = a.replaceAll(answer_only, "<span style=\"color:blue\">" + answer_only + "</span>");
             // console.log(a);
             // console.log(pass_qa[j].answers[0].answer_start);
             // console.log(pass_qa[j].answers[0].text);
@@ -182,10 +212,7 @@ function fill_context(container, context, pass_start, pass_qa, url){
         container.append('<br>');
     }
     // en_sent.html(en_sent.html().replace("woman", <span style="color:blue">woman</span>))
-    for(var i=0; i<url.length; i++){
-        img_box.attr("src", url[i]);
-        container.append(img_box.clone(true));
-    }
+
 }
 
 function fill_qa(container, data){
@@ -194,65 +221,88 @@ function fill_qa(container, data){
     var en_sent1 = $("<div></div>").attr("class", "sent-en-red");
     var en_sent2 = $("<div></div>").attr("class", "sent-en-blue");
     var en_sent3 = $("<div></div>").attr("class", "sent-en");
+    var en_sent4 = $("<label></label>").attr("class", "sent-en");
     var input_box = $('<input>');
-    var br_box = $('<br>');
-    input_box.attr("type", "radio");
+    var input_box_1 = $('<input>');
+    input_box.attr("type", "checkbox");
+    input_box_1.attr("type", "radio");
     var text_box = $('<input>');
     text_box.attr("type", "text");
     text_box.attr("size", "60");
-    text_box.attr("style", "font-size:16px");
+    text_box.attr("class", "sent-en");
 
     // sent_box.click(sent_click);
-    for (var i=0; i<data.length; i++){
+    for (var i=0; i<data.length; i++)
+    {
         en_sent1.text("Question: " + data[i].question);
         container.append(en_sent1.clone(true));
         en_sent1.text("Answer: " + data[i].answers[0].text);
         container.append(en_sent1.clone(true));
         en_sent2.text("Arguement role: " + data[i].arguement);
         container.append(en_sent2.clone(true));
-        en_sent3.text("Does the question need to modify the gram");
-        container.append(en_sent3.clone(true));
-        input_box.attr("name", data[i].id);
-        input_box.attr("value", "correct");
-        // input_box.text("Correct");
-        container.append(input_box.clone(true));
-        container.append("Correct</br>");
-        container.append(br_box);
-        input_box.attr("name", data[i].id);
-        input_box.attr("value", "question");
-        container.append(input_box.clone(true));
-        container.append("Need to modify the question</br>");
-        container.append(br_box);
-        // input_box.text("Need to modify the question");
-        input_box.attr("name", data[i].id);
-        input_box.attr("value", "answer");
-        container.append(input_box.clone(true));
-        container.append("Need to modify the answer</br>");
-        container.append(br_box);
-        // input_box.text("Need to modify the answer");
-        input_box.attr("name", data[i].id);
-        input_box.attr("value", "wrong");
-        container.append(input_box.clone(true));
-        container.append("Absolutely wrong</br>");
-        container.append(br_box);
-        // input_box.text("Absolutely wrong");
-        text_box.attr("name", data[i].id);
-        text_box.attr("value", "None");
-        container.append(text_box.clone(true));
-        container.append(br_box);
+        
+        // en_sent3.html("<br>About the question: <br>Correct the <b>grammatical errors</b> of the question, otherwise leave it with <b>None</b>. </br> Note that wrong capitalization is not counted as grammatical errors.");
+        // container.append(en_sent3.clone(true));
+        // text_box.val("None");
+        // container.append(text_box.clone(true));
+        // container.append(br_box.clone(true));
 
-        en_sent3.text("Is the question and answer related to pictures?");
+        // input_box.attr("name", data[i].id);
+        // input_box.attr("value", "arguement");
+        // container.append(input_box.clone(true));
+        // en_sent4.html("The question contains <span style=\"color:#5499C7\"> arguement role</span> information.");
+        // container.append(en_sent4.clone(true));
+
+        // en_sent3.html("<br>About the answer: ");
+        // container.append(en_sent3.clone(true));
+
+        // filtering
+
+        en_sent3.html("<br>About the answer: <br>The answer can be determined <b>without</b> looking at the <U>image</U>.");
         container.append(en_sent3.clone(true));
-        input_box.attr("name", data[i].id + "image");
-        input_box.attr("value", "related to pirctures");
-        container.append(input_box.clone(true));
-        container.append("related to pirctures</br>");
-        container.append(br_box);
-        input_box.attr("name", data[i].id + "image");
-        input_box.attr("value", "not related to pirctures");
-        container.append(input_box.clone(true));
-        container.append("not related to pirctures</br></br>");
-        container.append(br_box);
+
+        input_box_1.attr("name", data[i].id);
+        input_box_1.attr("value", "radio_yes");
+        container.append(input_box_1.clone(true));
+        en_sent4.html("Yes.</br>");
+        container.append(en_sent4.clone(true));
+
+        input_box_1.attr("name", data[i].id);
+        input_box_1.attr("value", "radio_no");
+        container.append(input_box_1.clone(true));
+        en_sent4.html("No.</br></br>");
+        container.append(en_sent4.clone(true));
+        // end filtering
+
+        // input_box.attr("name", data[i].id);
+        // input_box.attr("value", "incorrect");
+        // container.append(input_box.clone(true));
+        // en_sent4.html("The answer is <b>incorrect</b></br>");
+        // container.append(en_sent4.clone(true));
+
+        // input_box.attr("name", data[i].id);
+        // input_box.attr("value", "only one");
+        // container.append(input_box.clone(true));
+        // en_sent4.html("The answer is <b>not unique</b>to the question if: (1) You can find <b>other answers</b> from the original context. (2) The other answers and the one we provided are <b>not referring to the same object</b></br>");
+        // container.append(en_sent4.clone(true));
+
+        // input_box.attr("name", data[i].id);
+        // input_box.attr("value", "understand");
+        // container.append(input_box.clone(true));
+        // en_sent4.html("The answer can be determined <b>without</b> looking at the <U>context</U></br>");
+        // container.append(en_sent4.clone(true));
+
+        // input_box.attr("name", data[i].id);
+        // input_box.attr("value", "related to the image");
+        // container.append(input_box.clone(true));
+        // en_sent4.html("The answer <b>appears</b> in the <U>image</U></br>");
+        // container.append(en_sent4.clone(true));
+        
+        // input_box.attr("name", data[i].id);
+        // input_box.attr("value", "understand image");
+        // container.append(input_box.clone(true));
+        // en_sent4.html("The answer can be determined <b>without</b> looking at the <U>image</U>.</br></br></br>");
+        // container.append(en_sent4.clone(true));
     }
 }
 
@@ -323,53 +373,28 @@ function func_btn_back() {
 function submit_data(){
     var text = Array();
     var select = Array();
-    var image = Array();
     child = $(".content-bilingual.health input")
+    var flag = 0;
     child.each(function(i)
     {
-        if(i%7 == 4)
-        {
-            text.push(this.value);
-        }
+        // if(i%7 == 0)
+        // {
+        //     text.push(this.value);
+        // }
         if(this.checked)
         {
-            if(i%7 > 4)
-            {
-                image.push(i%7-5);
-            }
-            else
-            {
-                select.push(i%7)
-            }
+            select.push(i);
+            flag += 2;
         }
     })
-    var req_data = {
-        id:        page_data.id, 
-        user:       username,
-        password:   password,
-        label_result:   {text:text, select:select, image:image}};
-    var flag = 0;
-    for(var i=0; i < text.length; i++)
+    if(flag == child.length)
     {
-        if(select[i] != 0 & text[i] == 'None')
-        {
-            flag = 1;
-        }
-        if(select[i] == 0 & text[i] != 'None')
-        {
-            flag = 1;
-        }
-        if(select[i] == 3 & text[i].length < 50)
-        {
-            flag = 1;
-        }
-    }
-    if(image.length != text.length)
-    {
-        flag = 1;
-    }
-    if(flag == 0)
-    {
+        var req_data = {
+            id:        page_data.id, 
+            user:       username,
+            password:   password,
+            label_result:   {text:text, select:select}};
+    
         $.ajax({
             url: "send-data",
             type: "POST",
@@ -378,6 +403,7 @@ function submit_data(){
             success: response_submit
         })
     }
+
 }
 
 function response_submit(data){

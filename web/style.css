@@ -325,6 +325,14 @@ button:hover {
     font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
 }
 
+.content-intro {
+    margin-left: 70px;
+    margin-right:70px;
+    line-height:20pt;
+    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+}
+
 .content-sent-unlabeled, .content-sent-selected, .content-sent-labeled{
     padding:3px 0px 3px 5px;
     margin: 5px 0 5px 5px;
@@ -363,6 +371,16 @@ button:hover {
     font-size: 16px;
     line-height: 1.25;
 }
+
+.title-en {
+    font-family: sans-serif;
+    font-weight: bold;
+    text-align: justify;
+    margin-bottom: 5px;
+    font-size: 26px;
+    line-height: 1.25;
+}
+
 .sent-en > li{
     color: #5499C7;
 }

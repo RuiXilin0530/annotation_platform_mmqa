@@ -38,19 +38,35 @@
     </div>
     <div class="login-window-shadow"></div>
 
-    <div >
+    <div class='content-intro'>
         <br><b>Introduction</b>
-        <br>1. Everyone has his own user id and password, please take care of it.
-        <br>2. Every task will include at least one question-and-answer pair(<b>QA pair</b>). You need to read the <b>whole context</b> on the left and then answer the question on the right.
-        <br>3. You need to judge the <b>reasonableness</b> of this QA pair. 
-        <br>  3.1 If you think the QA pair is <b>absolutely correct</b>, please select "correct", and then fill <b>"None"</b> in the blank.
-        <br>  3.2 if you think the <b>question</b> is wrong, please select "Need to modify the question", and then fill the correct question in the blank. The question needs to be the <b>question of "arguement role"</b> if "arguement role" is correct.
-        <br>  3.3 if you think the <b>answer</b> is wrong, please select "Need to modify the answer", and then fill the correct answer in the blank. The answer needs to be a detailed <b>object of "arguement role"</b> if "arguement role" is correct.
-        <br>  3.4 if you think the question and answer are <b>both wrong</b>, please considers <b>which is more helpful</b> to modify the question or the answer, and implement it in accordance with 3.2 or 3.3.
-        <br>  3.5 if you think the QA pair is <b>hopeless</b>, please select "Absolutely wrong", then fill the reason in the blank. It is recommended not to choose this because the system needs you to <b>write at least 50 words</b>.
-        <br>4. You also need to judge whether or not the QA pair is <b>related to the pictures</b>. 
-        <br>5. You can press the <b>"refresh"</b> button to clear all your selections.
-        <br>6. If you press the "submit" button but doesn't submit it successfully, you need to <b>check your answer carefully</b>.
+        <br>1. Each annotator has an unique user id and password, please take care of it.
+        <br>2. Every task will include at least one question-and-answer pair(<b>QA pair</b>). You need to read the <b>whole context</b> and <b>image</b> on the left and then assess each QA pair on the right.
+        <br>3. Correct the <b>grammatical errors</b> of each question and write the whole corrected question in the inputbox, otherwise, leave it with <b>None</b> (<b>Wrong Capitalization</b> is <b>not</b> counted as an error).
+        <br>4. Assess each answer with the checkboxes according to the <b>context</b> and <b>image</b>.
+        <p style="text-indent:2em; margin:1px">
+            4.1 Check the checkbox if the answer is <b>incorrect</b> to the question. 
+            </p>
+        <p style="text-indent:2em; margin:1px">
+            4.2 Check the checkbox if the answer is <b>not unique</b> to the question. The answer is <b>not unique</b> if it satisfies all following conditions:
+        </p>
+            <p style="text-indent:4em; margin:1px">
+                1&#41; You can find <b>other answers</b> from the original context.
+                </p>
+            <p style="text-indent:4em; margin:1px">
+                2&#41; The other answers and the one we provided are <b>not referring to the same object</b>. e.g. <I><U>Donald Trump</U></I> is not counted as other answers to <I><U>Trump</U></I> because they are referring to the same person.
+                </p>
+        <p style="text-indent:2em; margin:1px">
+            4.3 Check the checkbox if you can determine the answer <b>without</b> looking at the <U>context</U>.
+            </p>
+        <p style="text-indent:2em; margin:1px">
+            4.4 Check the checkbox if the answer <b>appears</b> in the <U>image</U>.
+            </p>
+        <p style="text-indent:2em; margin:1px">
+            4.5 Check the checkbox if you can determine the answer <b>without</b> looking at the <U>image</U>.
+            </p>
+        5. Click the <b>refresh</b> button to clear all your selections.
+        <br>6. If the annotations are not submitted successfully by clicking the <b>submit</b> button, please <b> if your answers are still there</b>.
     </div>
 
     <div id="operation" class="">
@@ -65,44 +81,19 @@
     <div id="head_information">
         <div>
         <div id="pid" class="head-line">ID： </div>
-        <!-- <div id="page_name" class="head-line"></div>
-        <div id="page_section" class="head-line"></div>
-        <div id="page_cat" class="head-line"></div> -->
     </div>
     </div>
 
-    <!-- <div class="table-btn fixed">
-        <div class="cont-btn-line"><button name="btn_select">confirm</button></div>
-        <div class="cont-btn-line"><button name="btn_back">cancel</button></div>
-        <div class="status select">Please select and fill in all</div>
-    </div>
-
-    <div class="table-btn float">
-        <div class="cont-btn-line"><button name="btn_select">confirm</button></div>
-        <div class="cont-btn-line"><button name="btn_back">cancel</button></div>
-        <div class="status select">Please select and fill in all</div>
-    </div> -->
 
     <div id="content_table">
         <table>
             <tr>
                 <td valign="top">
                     <div class="content-bilingual medical">
-                        <!-- <div id="imgs">
-                            <img src="https://gdb.voanews.com/3CE10478-B836-4463-8896-1A227417B7A8.jpg" width="300">
-                        </div> -->
-                        <!--<div class="content-sent-unlabeled" data-sentid="50112">
-                            <div class="sent-en">Hello world!!</div>
-                            <div class="sent-zh">你好世界</div>
-                        </div>-->
                     </div>
                 </td>
                 <td valign="top">
                     <div class="content-bilingual health">
-                        <!--<div class="content-sent-unlabeled" data-sentid="86011">
-                            <div class="sent-en">Good morning!</div>
-                            <div class="sent-zh">早上好</div>
-                        </div>-->
                     </div>
                 </td>
             </tr>

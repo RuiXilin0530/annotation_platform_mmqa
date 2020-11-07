@@ -34,9 +34,9 @@ with open(config['data_fn'], encoding='utf8') as f:
 all_data = all_data['data'][0]["paragraphs"]
 logging.info('Original data: {}'.format(len(all_data)))
 
-if("id" not in all_data[0]):
-    for i in range(len(all_data)):
-        all_data[i]['id'] = str(i)
+# if("id" not in all_data[0]):
+#     for i in range(len(all_data)):
+#         all_data[i]['id'] = str(i)
 
 id_key = config['id_key']
 # Load finish id list
@@ -53,7 +53,6 @@ logging.info('Total finished samples: {}'.format(len(finish_list)))
 # Filter data
 all_data = [d for d in all_data if d[id_key] not in finish_list]
 print(all_data[0])
-print(all_data[1])
 logging.info('After filtering: {} samples'.format(len(all_data)))
 
 save_fn = './anno_data/labeled_data_{}.txt'.format(timestamp)
